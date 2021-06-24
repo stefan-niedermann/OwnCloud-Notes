@@ -61,20 +61,15 @@ public class EditTitleDialogFragment extends DialogFragment {
                 .setView(dialogView)
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_edit_save, (dialog, which) -> {
-                    hideKeyboard(dialogView.findViewById(R.id.title).getWindowToken());
+                    hideKeyboard(dialogView.getWindowToken());
                     listener.onTitleEdited(binding.title.getText().toString());
                 })
-                .setNegativeButton(R.string.simple_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        hideKeyboard(dialogView.findViewById(R.id.title).getWindowToken());
-                    }
-                })
+                .setNegativeButton(R.string.simple_cancel, (dialog, which) -> hideKeyboard(dialogView.getWindowToken()))
                 .create();
     }
 
     private void hideKeyboard(IBinder windowToken) {
-        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager inputManager = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
