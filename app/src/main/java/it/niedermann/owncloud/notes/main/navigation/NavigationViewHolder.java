@@ -1,6 +1,7 @@
 package it.niedermann.owncloud.notes.main.navigation;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,5 +60,9 @@ class NavigationViewHolder extends RecyclerView.ViewHolder {
         icon.setColorFilter(isSelected ? textColor : 0);
 
         view.setSelected(isSelected);
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        params.leftMargin = item.icon == NavigationAdapter.ICON_SUB_FOLDER ? view.getResources().getDimensionPixelSize(R.dimen.margin_25) : 0;
+        view.requestLayout();
     }
 }

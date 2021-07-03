@@ -350,7 +350,7 @@ public class MainViewModel extends AndroidViewModel {
                 lastSecondaryCategory.icon = NavigationAdapter.ICON_SUB_MULTIPLE;
             } else if (belongsToLastPrimaryCategory) {
                 if (isCategoryOpen) {
-                    item.label = currentPrimaryCategory + "/" + currentSecondaryCategory;
+                    item.label = currentSecondaryCategory;
                     item.id = "category:" + item.label;
                     item.icon = NavigationAdapter.ICON_SUB_FOLDER;
                     items.add(item);
