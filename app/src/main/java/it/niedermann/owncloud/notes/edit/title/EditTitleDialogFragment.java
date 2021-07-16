@@ -3,11 +3,14 @@ package it.niedermann.owncloud.notes.edit.title;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,10 +59,18 @@ public class EditTitleDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.change_note_title)
                 .setView(dialogView)
-                .setCancelable(true)
-                .setPositiveButton(R.string.action_edit_save, (dialog, which) -> listener.onTitleEdited(binding.title.getText().toString()))
-                .setNegativeButton(R.string.simple_cancel, null)
+                .setCancelable(false)
+                .setPositiveButton(R.string.action_edit_save, (dialog, which) -> {
+                    hideKeyboard(dialogView.getWindowToken());
+                    listener.onTitleEdited(binding.title.getText().toString());
+                })
+                .setNegativeButton(R.string.simple_cancel, (dialog, which) -> hideKeyboard(dialogView.getWindowToken()))
                 .create();
+    }
+
+    private void hideKeyboard(IBinder windowToken) {
+        final InputMethodManager inputManager = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
